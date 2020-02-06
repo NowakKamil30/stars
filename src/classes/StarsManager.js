@@ -23,52 +23,6 @@ class StarsManager{
             star.move();
         });
     }
-
-    drawConstellation(){
-        const {stars, isClosed} = this.constellation;
-
-        if(stars.lenght < 2){
-            return;
-        }
-        this.context.beginPath();
-
-        stars.forEach(({x,y},index) => {
-            if(index === 0){
-                this.context.moveTo(x, y)
-            }else{
-                this.context.lineTo(x,y);
-            }
-        })
-
-        if(isClosed){
-            const {x,y} = stars[0];
-            this.context.lineTo(x,y)
-        }
-        this.context.strokeStyle = "#ff9933";
-        this.context.stroke();
-
-    }
-
-    generatorConstellation(){
-        const width =  window.innerWidth;
-        const height = window.outerHeight;
-
-        const x = width / 2 * (Math.random() + 0.3);
-        const y = height / 2 * (Math.random( + 0.3));
-        const radius = (height /6 + width / 10) * Math.random()+66;
-
-        this.constellation = {
-            stars: this.stars.filter(star => (
-                star.x > x - radius
-                && star.x < x + radius
-                && star.y > y - radius
-                && star.y < y + radius
-            )).slice(0, Math.floor(Math.random()*this.starsInConstellation)+this.minStarsInConstellation),
-            isClosed: Math.random() > 0.5
-        }
-
-    }
-
     static prepareStarsData(count){
         const stars = [];
         const width =  window.innerWidth;
@@ -88,6 +42,61 @@ class StarsManager{
             })
         }
         return stars;
+    }
+
+    drawConstellation(){
+        const {stars, isClosed,width} = this.constellation;
+
+        if(stars.lenght < 2){
+            return;
+        }
+        this.context.beginPath();
+
+        stars.forEach(({x,y},index) => {
+            if(index === 0){
+                this.context.moveTo(x, y)
+            }else{
+                this.context.lineTo(x,y);
+            }
+        })
+
+        if(isClosed){
+            const {x,y} = stars[0];
+            this.context.lineTo(x,y)
+        }
+        this.context.strokeStyle = "#ff9933";
+        this.context.lineWidth = width;
+        this.context.stroke();
+
+    }
+
+    generatorConstellation(){
+        const width =  window.innerWidth;
+        const height = window.outerHeight;
+
+        const x = width / 2 * (Math.random() + 0.3);
+        const y = height / 2 * (Math.random( + 0.3));
+        const radius = (height /6 + width / 10) * Math.random()+66;
+
+        this.constellation = {
+            stars: this.stars.filter(star => (
+                star.x > x - radius
+                && star.x < x + radius
+                && star.y > y - radius
+                && star.y < y + radius
+            )).slice(0, Math.floor(Math.random()*this.starsInConstellation)+this.minStarsInConstellation),
+            isClosed: Math.random() > 0.5,
+            width: Math.floor(Math.random()*5)
+        }
+    }
+
+    updateConstellation(){
+        if(this.constellation.width > 0){
+            this.constellation.width -= 0.01;
+        }
+        if(Math.ceil(this.constellation.width) === 0){
+            this.generatorConstellation();
+        }
     }
 }
 

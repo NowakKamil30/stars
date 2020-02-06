@@ -35,8 +35,9 @@ class Sky{
         this.clearCanvas();
         this.starsManager.move();
         this.starsManager.drawConstellation();
+        this.starsManager.updateConstellation();
         this.drawOverlayer();
-        window.requestAnimationFrame(() => this.draw());
+        window.requestAnimationFrame(now => this.draw());
         
 
     }
