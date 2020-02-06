@@ -32,7 +32,10 @@ class StarsManager{
                 y: Math.random() * height,
                 radius: Math.random() * 3 + 2,
                 color: "#ff9933",
-                speed: Math.random()
+                speed:{
+                    x: Math.random() * 0.2,
+                    y: Math.random() * 0.2
+                }
             })
         }
         console.log(stars);

@@ -27,8 +27,17 @@ class Star{
     }
     
     move(){
-        this.x += this.speed;
-        this.y += this.speed;
+        this.x += this.speed.x;
+        this.y += this.speed.y;
+        const width =  window.innerWidth;
+        const height = window.outerHeight;
+        if(this.x > width + 2 * this.radius){
+            this.x = - 2 * this.radius;
+        }
+        if(this.y >height + 2 * this.radius)
+        {
+            this.y = - 2 * this.radius;
+        }
         this.draw();
     }
 }
