@@ -25,7 +25,7 @@ class StarsManager{
     }
 
     drawConstellation(){
-        const {stars} = this.constellation;
+        const {stars, isClosed} = this.constellation;
 
         if(stars.lenght < 2){
             return;
@@ -39,6 +39,11 @@ class StarsManager{
                 this.context.lineTo(x,y);
             }
         })
+
+        if(isClosed){
+            const {x,y} = stars[0];
+            this.context.lineTo(x,y)
+        }
         this.context.strokeStyle = "#ff9933";
         this.context.stroke();
 
@@ -58,7 +63,8 @@ class StarsManager{
                 && star.x < x + radius
                 && star.y > y - radius
                 && star.y < y + radius
-            )).slice(0, Math.floor(Math.random()*this.starsInConstellation)+this.minStarsInConstellation)
+            )).slice(0, Math.floor(Math.random()*this.starsInConstellation)+this.minStarsInConstellation),
+            isClosed: Math.random() > 0.5
         }
 
     }
