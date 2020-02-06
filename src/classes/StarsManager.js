@@ -3,17 +3,23 @@ import Star from "./Star";
 class StarsManager{
     constructor(context,stars){
         this.context = context;
-        this.stars = stars;
+        this.stars = stars.map(({x,y,radius,color,speed})=>{
+            const star = new Star(context,x,y,color,radius,speed);
+            return star;
+        })
     }
 
     draw(){
-        this.stars.forEach(({x,y,radius,color}) => {
-            const {context} = this;
-            const star = new Star(context,x,y,color,radius);
+        this.stars.forEach((star) => {
             star.draw();
         });
     }
-
+    move(){
+        console.log('move');
+        this.stars.forEach((star) => {
+            star.move();
+        });
+    }
     static prepareStarsData(count){
         const stars = [];
         const width =  window.innerWidth;
@@ -25,7 +31,8 @@ class StarsManager{
                 x : Math.random() * width,
                 y: Math.random() * height,
                 radius: Math.random() * 3 + 2,
-                color: "#ff9933"
+                color: "#ff9933",
+                speed: Math.random()
             })
         }
         console.log(stars);

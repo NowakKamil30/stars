@@ -1,10 +1,11 @@
 class Star{
-    constructor(context,x,y,color,radius){
+    constructor(context,x,y,color,radius,speed){
         this.context = context;
         this.x = x;
         this.y = y;
         this.color = color;
         this.radius = radius;
+        this.speed = speed;
     }
     draw(){
         const{x,y,color,radius} = this;
@@ -21,10 +22,14 @@ class Star{
             this.context.rotate((Math.PI/180) * 36);
             this.context.lineTo(0,0 - this.radius);
         }
-
-
         this.context.fill();
         this.context.restore();
+    }
+    
+    move(){
+        this.x += this.speed;
+        this.y += this.speed;
+        this.draw();
     }
 }
 
