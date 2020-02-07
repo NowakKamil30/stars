@@ -9,9 +9,15 @@ class StarsManager{
             const star = new Star(context,x,y,color,radius,speed);
             return star;
         })
+        this.delta = 1;
         this.generatorConstellation();
     }
-
+    getDelta(){
+        return this.delta;
+    }
+    setDeltaNolmalize(delta){
+        this.delta = delta/16;
+    }
     draw(){
         this.stars.forEach((star) => {
             star.draw();
@@ -20,7 +26,7 @@ class StarsManager{
 
     move(){
         this.stars.forEach((star) => {
-            star.move();
+            star.move(this.delta);
         });
     }
     static prepareStarsData(count){
@@ -62,7 +68,7 @@ class StarsManager{
 
         if(isClosed){
             const {x,y} = stars[0];
-            this.context.lineTo(x,y)
+            this.context.lineTo(x,y);
         }
         this.context.strokeStyle = "#ff9933";
         this.context.lineWidth = width;
@@ -91,8 +97,9 @@ class StarsManager{
     }
 
     updateConstellation(){
+        const {delta} = this;
         if(this.constellation.width > 0){
-            this.constellation.width -= 0.01;
+            this.constellation.width -= 0.01 * delta;
         }
         if(Math.ceil(this.constellation.width) === 0){
             this.generatorConstellation();

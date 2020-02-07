@@ -5,6 +5,8 @@ class Sky{
         this.context = canvas.getContext("2d");
         this.backgroundColor = backgroundColor;
         this.starsManager = new StarsManager(this.context,StarsManager.prepareStarsData(numberOfStar),30,2);
+        this.lastUpdate = 0;
+        this.delta = 0;
     }
     initCanvas(){
         const width = window.innerWidth;
@@ -31,19 +33,21 @@ class Sky{
         this.context.fillStyle = gradient;
         this.context.fillRect(0,0,width,height);
     }
-    draw(){
+    draw(now){
+        this.delta = now - this.lastUpdate;
         this.clearCanvas();
+        this.starsManager.setDeltaNolmalize(this.delta);
         this.starsManager.move();
         this.starsManager.drawConstellation();
         this.starsManager.updateConstellation();
         this.drawOverlayer();
-        window.requestAnimationFrame(now => this.draw());
-        
 
+        this.lastUpdate = now;
+        window.requestAnimationFrame(now => this.draw(now));
     }
     run(){
         this.initCanvas();
-        this.draw();
+        this.draw(0);
     }
 }
 

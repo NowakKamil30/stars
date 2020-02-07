@@ -27,12 +27,12 @@ class Star{
         this.context.restore();
     }
     
-    move(){
+    move(delta = 1){
         const width =  window.innerWidth;
         const height = window.outerHeight;
 
-        this.x += this.speed.x;
-        this.y += this.speed.y * (this.x - width/2)/1500;
+        this.x += this.speed.x * delta;
+        this.y += this.speed.y * (this.x - width/2)/1500 * delta;
         this.currentRadius = this.radius * (Math.random() /3 + 0.8);
 
         if(this.x > width + 2 * this.radius){
