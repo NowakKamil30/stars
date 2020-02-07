@@ -4,11 +4,16 @@ class Sky{
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
         this.backgroundColor = backgroundColor;
-        this.starsManager = new StarsManager(this.context,StarsManager.prepareStarsData(numberOfStar),30,2);
+        this.numberOfStar = numberOfStar;
+        this.starsManager = null;
         this.lastUpdate = 0;
         this.delta = 0;
+        window.addEventListener("resize",() => {
+            this.initCanvas();
+        })
     }
     initCanvas(){
+        this.starsManager=new StarsManager(this.context,StarsManager.prepareStarsData(this.numberOfStar),30,2);
         const width = window.innerWidth;
         const height = window.outerHeight;
         this.canvas.width = width
